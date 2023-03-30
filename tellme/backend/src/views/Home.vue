@@ -198,9 +198,29 @@
                     placeholder="Search"
                     type="text"
                     name="search"
-                    class="block w-80 px-3 py-1.5 text-gray-600 placeholder-gray-400 bg-white border border-orange-300 rounded-md focus:border-orange-400 focus:outline-none focus:ring focus:ring-orange-300 focus:ring-opacity-40"
+                    class="hidden block w-80 px-3 py-1.5 text-gray-600 placeholder-gray-400 bg-white border border-orange-300 rounded-md focus:border-orange-400 focus:outline-none focus:ring focus:ring-orange-300 focus:ring-opacity-40 md:block"
                 />
+                
+               <div class="flex gap-4">
+                 <!-- search -->
+                 <div class="p-1.5 rounded bg-orange-100">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 text-orange-600"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                        />
+                    </svg>
+                </div>
 
+                <!-- notification -->
                 <div class="p-1.5 rounded bg-orange-100">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -217,16 +237,17 @@
                         />
                     </svg>
                 </div>
+               </div>
             </nav>
             <!-- End Navbar -->
 
             <!-- Hero Section -->
             <section
-                class="flex flex-col h-[80vh] justify-between items-center md:flex-row"
+                class="flex flex-col h-full justify-between items-center md:flex-row md:h-[80vh]"
             >
                 <!-- Text Content -->
                 <div
-                    class="w-full p-8 flex flex-col h-full justify-around md:w-1/2"
+                    class="w-full p-8 flex flex-col h-full space-y-10 justify-center  md:w-1/2"
                 >
                     <p
                         class="leading-8 text-2xl leading-relaxed font-medium md:text-5xl"
@@ -237,15 +258,11 @@
                     </p>
                     <div class="w-full flex gap-12">
                         <button
-                            class="text-md font-medium py-2 px-4 rounded border border-gray-900 bg-orange-600 text-white"
+                            class="text-sm md:text-md font-medium py-2 px-4 rounded  bg-orange-600 text-white"
                         >
                             Get Started
                         </button>
-                        <button
-                            class="text-md font-medium py-2 px-4 border border-orange-600 rounded bg-gray-900 text-orange-600"
-                        >
-                            Become a Podcaster
-                        </button>
+                      
                     </div>
                 </div>
                 <!-- End Text Content -->
@@ -267,7 +284,7 @@
                 <h3 class="text-xl font-medium">Most Popular Podcasts</h3>
                 <div
                     class="snap-start snap-x flex gap-8 h-44 snap-mandatory overflow-x-auto p-2"
-                 >
+                >
                     <div
                         class="snap-start min-w-[40%] flex flex-col h-full rounded-md border border-orange-200 md:flex-row overflow-hidden"
                     >
@@ -291,12 +308,12 @@
 
             <!-- End Podcast Section -->
 
-             <!-- Popular Playlist Section -->
-             <section class="w-full flex flex-col gap-6 p-8 ">
-                <h3 class="text-xl font-medium"> Popular Playlists</h3>
+            <!-- Popular Playlist Section -->
+            <section class="w-full flex flex-col gap-6 p-8">
+                <h3 class="text-xl font-medium">Popular Playlists</h3>
                 <div
                     class="snap-start snap-x flex gap-8 h-44 snap-mandatory overflow-x-auto p-2"
-                 >
+                >
                     <div
                         class="snap-start min-w-[40%] flex flex-col h-full rounded-md border border-orange-200 md:flex-row overflow-hidden"
                     >
