@@ -22,9 +22,12 @@ class StorePodcastRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'first_name' => ['required', 'min:4', 'max:30'],
-        //     'last_name' => ['required', 'min:4', 'max:30']
-
+            'title' => 'required',
+            'description' => 'required',
+            'url' => 'required',
+            'duration' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required'
         ];
     }
 }

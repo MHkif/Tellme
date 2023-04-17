@@ -1,10 +1,133 @@
 <template>
   <MainLayout>
+    <!-- Modal -->
+    <div
+      v-show="this.modelOpen"
+      class="fixed inset-0 z-50"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0"
+      >
+        <div
+          @click="this.modelOpen = false"
+          v-show="this.modelOpen"
+          class="fixed w-full inset-0 flex items-center transition-opacity blur-sm backdrop-blur-sm bg-gray/10"
+          aria-hidden="true"
+        ></div>
+
+        <div
+          v-show="this.modelOpen"
+          class="inline-block w-full my-[30vh] max-w-xl overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl 2xl:max-w-2xl"
+        >
+          <!-- <div class="flex items-center justify-between space-x-4">
+          
+
+            <button
+              @click="this.modelOpen = false"
+              class="text-red-600 focus:outline-none hover:text-gray-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </button>
+          </div> -->
+
+          <form
+            @submit.prevent="filteredUsers"
+            class="p-5 border-b border-gray-200"
+          >
+            <div class="flex gap-2 items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-orange-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+              <input
+                v-model="searchQuery"
+                placeholder="Search for someone"
+                type="text"
+                :on-keyup="filteredUsers"
+                name="users"
+                class="block w-full px-3 py-1.5 text-gray-600 placeholder-gray-400 bg-white border-none rounded-md focus:outline-none focus:ring-1 focus:ring-orange-400"
+              />
+            </div>
+          </form>
+          <div>
+            <div class="max-h-56 p-5 flex flex-col gap-2 overflow-y-auto">
+              <h3 class="text-sm font-medium">All Users</h3>
+              <div
+                class="flex items-center justify-between py-3 rounded w-full"
+                v-for="user in users"
+                :key="user.id"
+              >
+                <div class="flex gap-3 items-center">
+                  <div class="h-8 w-8 overflow-hidden rounded-full bg-gray-600">
+                    <img
+                      class="h-full w-full object-fit"
+                      src="../assets/jordan.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <h1 class="text-sm">
+                    {{ user.first_name }} {{ user.last_name }} {{ user.id }}
+                  </h1>
+                </div>
+                <button @click="callUser(user.id)">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 hover:fill-orange-600"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
+
     <div
       class="flex w-full h-[4rem] p-8 justify-between items-center"
       style="background-color: #252525"
     >
-      <h3 class="font-bold text-2xl text-white">Meeting</h3>
+      <h3
+        class="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-gray-600 font-bold text-2xl"
+      >
+        Meeting
+      </h3>
+
       <button
         @click="joinStreamInit"
         class="flex justify-center rounded bg-gray-900 px-4 py-2 text-md font-semibold text-orange-600 border border-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
@@ -20,10 +143,7 @@
       style="background-color: #252525"
     >
       <!-- Video Chat -->
-      <section
-        id="stream"
-        class="h-full w-full md:w-[73%] rounded-lg bg-gray-800 p-2"
-      >
+      <section id="stream" class="h-full w-full rounded-lg bg-gray-800 p-2">
         <div class="relative h-full w-full rounded-lg overflow-hidden">
           <div
             id="room"
@@ -166,24 +286,63 @@
       <!-- End Video Chat -->
 
       <!-- Participants -->
-      <div class="hidden w-[27%] h-full flex flex-col md:flex">
+      <div
+        class="pt-4 w-[3.35rem] h-full flex flex-col md:w-[27%] md:flex overflow-hidden"
+      >
         <div
-          class="w-full flex items-center justify-center p-4 border-b border-gray-700"
+          class="w-full flex flex-col items-center justify-center gap-4 p-4 border-b border-gray-700 md:flex-row"
         >
           <p
-            class="px-8 p-2 flex items-center justify-center gap-4 rounded text-white border border-orange-600"
+            class="p-1 flex items-center justify-center md:gap-4 rounded text-white border border-orange-600 md:py-2 md:px-8"
           >
-            Participants
-            <span class="px-2 bg-orange-600 txet-white rounded">0</span>
+            <span class="hidden md:block">Participants</span>
+            <span class="px-2 md:bg-orange-600 text-white rounded">0</span>
           </p>
+          <button
+            class="p-1 border border-gray-900 hover:border-orange-600 bg-orange-50 rounded md:p-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 text-orange-600"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
         </div>
 
-        <div class="p-4">
+        <div class="p-2 md:p-4">
+          <!-- search -->
+          <button
+            class="p-1 border border-gray-900 hover:border-orange-600 bg-orange-50 rounded md:p-2 md:hidden"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 text-orange-600"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </button>
           <input
             placeholder="Search"
             type="text"
             name="search"
-            class="hidden block w-full px-3 py-1.5 text-gray-600 placeholder-gray-400 bg-white border border-orange-300 rounded-md focus:border-orange-400 focus:outline-none focus:ring focus:ring-orange-300 focus:ring-opacity-40 md:block"
+            class="hidden w-full px-3 py-1.5 text-gray-600 placeholder-gray-400 bg-white border border-orange-300 rounded-md focus:border-orange-400 focus:outline-none focus:ring focus:ring-orange-300 focus:ring-opacity-40 md:block"
           />
         </div>
       </div>
@@ -191,10 +350,23 @@
     </div>
     <div
       v-else
-      class="w-full h-[calc(100vh-4rem)] flex"
+      class="w-full h-[calc(100vh-4rem)] flex flex-col justify-center items-center gap-10"
       style="background-color: #252525"
     >
-      <div class="hidden h-[50%] md:block">
+      <div class="flex flex-col items-center">
+        <p
+          class="leading-8 text-2xl text-white leading-relaxed font-medium md:text-4xl"
+        >
+          Make The Universe Closer
+        </p>
+        <p
+          class="leading-8 text-2xl text-white leading-relaxed font-medium md:text-4xl"
+        >
+          with
+          <span class="text-orange-600" style="color: #ff4d00">Tellme</span>
+        </p>
+      </div>
+      <div class="h-[50%]">
         <img src="../assets/Group_video.svg" alt="" class="h-full" />
       </div>
     </div>
@@ -210,34 +382,84 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import NavBar from "../components/NavBar.vue";
 import MainLayout from "../components/MainLayout.vue";
-import { shallowRef } from "vue";
+import { ref, shallowRef } from "vue";
+import DropdownUsers from "../components/DropdownUsers.vue";
 
 export default {
   components: {
     MainLayout,
     NavBar,
+    DropdownUsers,
   },
   data() {
     return {
       APP_ID: "6b1a5dd316ca49559aba4c4cd2815d89",
       uid: "",
       token: "",
-      calling: true,
+      calling: false,
       client: shallowRef(),
       userIdInDisplayFrame: "",
       localTracks: [],
       remoteUsers: {},
       localScreenTraks: "",
       sharingScreen: false,
+      modelOpen: false,
+      searchQuery: "",
+      users: ref([]),
     };
   },
+  computed: {
+    filteredUsers() {
+      if (this.searchQuery === "") {
+        this.searchQuery = "";
+        return (this.users = []);
+      }
+      console.log("searchInput : ", this.searchQuery);
+      axios
+        .post(
+          "http://127.0.0.1:8000/api/v1/search",
+          {
+            users: this.searchQuery,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log("Response : ", res.data);
+          this.users = res.data;
+        })
+        .catch((err) => {
+          console.log("Error : ", err.data);
+        });
+    },
+  },
   methods: {
+    callUser(id) {
+      axios
+        .post("http://127.0.0.1:8000/api/v1/calling", {
+          sender: this.$store.state.id,
+          receiver: id,
+        })
+        .then((res) => {
+          console.log("Calling : ", res.data);
+        })
+        .catch((err) => {});
+    },
     async joinStreamInit() {
+      if (!this.calling) {
+        this.modelOpen = true;
+        return;
+      }
+      this.calling = true;
       this.client = AgoraRTC.createClient({
         mode: "rtc",
         codec: "vp8",
       });
-      await this.client.join(this.APP_ID, "main", null, this.uid);
+      await this.client.join(this.APP_ID, "1", null, this.uid);
 
       this.client.on("user-published", this.handeleUserPublished);
       this.client.on("user-left", this.handleUserLeft);
@@ -421,9 +643,9 @@ export default {
   },
   mounted() {
     // this.joinStreamInit();
-    if (this.$store.state.token !== "") {
-      // this.uid = this.$store.state.token;
-      this.uid = String(Math.floor(Math.random() * 10000));
+    if (this.$store.state.token !== "" && this.$store.state.uid !== "") {
+      this.uid = this.$store.state.uid;
+      // this.uid = String(Math.floor(Math.random() * 10000));
       axios
         .post("http://127.0.0.1:8000/api/v1/checkToken", {
           token: this.$store.state.token,

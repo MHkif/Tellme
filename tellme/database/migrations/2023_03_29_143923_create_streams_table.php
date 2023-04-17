@@ -13,18 +13,17 @@ return new class extends Migration
     {
         Schema::create('streams', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->longText('description')->nullable();
-            $table->text('url')->nullable(false);
-            $table->string('duration');
-            $table->string('cover');
+            $table->text('url')->nullable();
+            $table->string('duration')->nullable();
+            $table->string('cover')->nullable();
             $table->foreignId("user_id")
                 ->constrained("users")
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->integer('is_saved')->default(0);
             $table->timestamps();
-
         });
     }
 

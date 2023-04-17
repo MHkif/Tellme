@@ -27,8 +27,16 @@ class User extends Authenticatable implements JWTSubject
         'summary',
         'type',
     ];
-
-    public function podcasts(){
+    // public function scopeFilter($query, array $filter)
+    // {
+    //     if ($filter['users'] ?? false) {
+    //         $query->where('first_name', 'like', '%' . request('users') . '%')
+    //             ->orWhere('last_name', 'like', '%' . request('users') . '%')
+    //             ->orWhere('email', 'like', '%' . request('users') . '%');
+    //     }
+    // }
+    public function podcasts()
+    {
         return $this->hasMany(Podcast::class);
     }
     /**
@@ -62,4 +70,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'calling' . $this->id;
+    }
+
+    // public function notifications()
+    // {
+    //     return $this->hasMany(Notification::class);
+    // }
 }

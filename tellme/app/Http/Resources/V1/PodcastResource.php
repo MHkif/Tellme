@@ -16,6 +16,11 @@ class PodcastResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'url' => $this->url,
+            'category_id' => $this->category_id,
+            'cover' => $this->cover,
             'createdAt' => $this->created_at
         ];
     }

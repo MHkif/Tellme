@@ -13,20 +13,21 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-// Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-//     return (int) $user->id === (int) $id;
-// });
-
-// Broadcast::channel('agora-online-channel', function ($user) {
-//     return ['id' => $user->id, 'name' => $user->name];
-// });
-
-// Dynamic Presence Channel for Streaming
-Broadcast::channel('streaming-channel.{streamId}', function ($user) {
-    return ['id' => $user->id, 'name' => $user->email];
+Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
 });
 
-// Signaling Offer and Answer Channels
-Broadcast::channel('stream-signal-channel.{userId}', function ($user, $userId) {
-    return (int) $user->id === (int) $userId;
+Broadcast::channel('calling.{id}', function ($user, $id) {
+    // return (int) $user->id === (int) $id;
+    return ['id' => $user->id, 'last_name' => $user->last_name];
 });
+
+// // Dynamic Presence Channel for Streaming
+// Broadcast::channel('streaming-channel.{streamId}', function ($user) {
+//     return ['id' => $user->id, 'name' => $user->email];
+// });
+
+// // Signaling Offer and Answer Channels
+// Broadcast::channel('stream-signal-channel.{userId}', function ($user, $userId) {
+//     return (int) $user->id === (int) $userId;
+// });

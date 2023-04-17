@@ -16,9 +16,11 @@
 
       <!--  Podcasts Section -->
       <ListScroll title="Popular Podcasts Episodes">
-        <SnapPodcast />
-        <SnapPodcast />
-        <SnapPodcast />
+        <SnapPodcast
+          v-for="podcast in podcasts"
+          :key="podcast.id"
+          :podcast="podcast"
+        />
       </ListScroll>
       <!-- End  Podcasts Section -->
 
@@ -29,14 +31,17 @@
         <PlayListCard />
       </ListScroll>
       <!-- End  Playlist Section -->
-
+      
       <!--  Podcasts  Section -->
-      <PodcastsGrid title="Most Populat Podcasts">
-        <PodcastCard></PodcastCard>
-        <PodcastCard></PodcastCard>
-        <PodcastCard></PodcastCard>
+      <PodcastsGrid
+        title="Most Populat Podcasts"
+        :podcasts="podcasts"
+        @click="this.$emit('playPodcast', podcast)"
+      >
       </PodcastsGrid>
       <!-- End  Podcasts  Section -->
+      <div class="my-16"></div>
+      <AudioPlayer :podcast="podcast"/>
     </MainLayout>
   </div>
 </template>
@@ -52,6 +57,7 @@ import PlayListCard from "../components/PlayListCard.vue";
 import ListScroll from "../components/ListScroll.vue";
 import SnapPodcast from "../components/SnapPodcast.vue";
 import Swal from "sweetalert2";
+import AudioPlayer from "../components/AudioPlayer.vue";
 
 export default {
   components: {
@@ -62,14 +68,33 @@ export default {
     PlayListCard,
     ListScroll,
     SnapPodcast,
+    AudioPlayer,
     Hero,
   },
   data() {
     return {
       loading: true,
+      podcasts: [],
+      podcast : this.$store.state.podcasts
     };
   },
+  methods: {
+    getPodcasts() {
+      axios
+        .get("http://127.0.0.1:8000/api/v1/podcasts")
+        .then((response) => {
+          console.log("Response Data : ", response);
+          if (response.data) {
+            this.podcasts = response.data.data;
+          }
+        })
+        .catch((error) => {
+          console.log("Error :", error.response);
+        });
+    },
+  },
   mounted() {
+    this.getPodcasts();
     if (this.$store.state.token !== "") {
       axios
         .post("http://127.0.0.1:8000/api/v1/checkToken", {

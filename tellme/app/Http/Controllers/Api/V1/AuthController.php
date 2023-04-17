@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -23,8 +24,9 @@ class AuthController extends Controller
         if (!$token = JWTAuth::attempt($credential)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        return response()->json(compact('token'), 200);
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        return response()->json(compact('token', 'user_id', 'user'), 200);
     }
 
     public function register(Request $request)
@@ -48,8 +50,8 @@ class AuthController extends Controller
         ]);
 
         $token = JWTAuth::fromUser($user);
-
-        return response()->json(compact('token'), 201);
+        $user_id = Auth::user()->id;
+        return response()->json(compact('token', 'user_id'), 201);
     }
 
     public function checkToken()

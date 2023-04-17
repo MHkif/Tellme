@@ -139,7 +139,9 @@ export default {
         .then((response) => {
           //   localStorage.setItem("token", response.data.token);
           this.$store.commit("setToken", response.data.token);
-          console.log("Token : ", response.data.token);
+          // this.$store.commit("setId", response.data.user_id);
+          this.$store.commit("setUser", response.data.user);
+
           this.$router.push("/");
         })
         .catch((error) => {

@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div v-if="loading" class="flex min-h-full w-full justify-center items-center">
-        <h2 class="text-xxl">Loading...</h2>
+    <div
+      v-if="loading"
+      class="flex min-h-full w-full justify-center items-center"
+    >
+      <h2 class="text-xxl">Loading...</h2>
     </div>
     <div class="flex min-h-full items-center" v-else>
       <div class="relative hidden w-[40%] h-screen md:flex">
@@ -23,7 +26,7 @@
         <div class="flex items-center justify-end gap-4 w-full">
           <h3 class="block text-md text-gray-600">Not a member ?</h3>
           <router-link
-          to="/register"
+            to="/register"
             class="flex justify-center rounded-md bg-orange-600 px-4 py-2 text-md font-semibold text-white hover:text-orange-600 hover:bg-white border border-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
           >
             Sign Up
@@ -129,9 +132,12 @@ export default {
       axios
         .post("http://127.0.0.1:8000/api/v1/login", this.credentials)
         .then((response) => {
-          //   localStorage.setItem("token", response.data.token);
+          // localStorage.setItem("id", response.data.user_id);
           this.$store.commit("setToken", response.data.token);
-          console.log("Token : ", response.data.token);
+          // this.$store.commit("setId", response.data.user_id);
+          this.$store.commit("setUser", response.data.user);
+
+          console.log("Token : ", response.data);
           this.$router.push("/");
         })
         .catch((error) => {
@@ -152,7 +158,7 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
-          this.$store.commit("clearToken");
+          this.$store.commit("clearCredentials");
         });
     } else {
       this.loading = false;

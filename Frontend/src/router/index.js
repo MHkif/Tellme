@@ -5,10 +5,11 @@ import Register from "../views/Register.vue";
 import Home from "../views/Home.vue";
 import Profile from "../views/profile.vue";
 import Streams from "../views/Streams.vue";
+import Podcasts from "../views/Podcasts.vue";
 import StreamRoom from "../views/StreamRoom.vue";
 import Meeting from "../views/Meeting.vue";
 import Discover from "../views/Discover.vue";
-import ShortVideos from "../views/shV.vue";
+import ShortVideos from "../views/ShortVideos.vue";
 
 const routes = [
   {
@@ -54,7 +55,7 @@ const routes = [
   {
     path: "/podcasts",
     name: "podcasts",
-    component: Streams,
+    component: Podcasts,
   },
   {
     path: "/streamRoom",
