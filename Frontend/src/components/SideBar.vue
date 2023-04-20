@@ -294,32 +294,33 @@
           <span class="group-hover:text-orange-600">Log Out</span>
         </a>
       </div> -->
-      <div :class="show ? 'block' : 'hidden'" class="w-max">
+
+      <div :class="this.$store.state.collapse ? '' : 'hidden'" class="w-max">
         <div class="flex items-center space-x-4 p-1 text-white">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
-              <div class="overflow-hidden rounded-xl p-0.5 ">
-              <img
-                id="footerImg"
-                class="h-10 w-10 flex-shrink-0"
-                src="../assets/cover.jpg"
-                alt=""
-              />
-            </div>
-            <div class="mr-4 space-y-2">
-              <div
-                id="footerTitle"
-                class="text-sm text-gray-400 text-line-clamp-1 font-semibold"
-              >
-                Podcast
+              <div class="overflow-hidden rounded-xl p-0.5">
+                <img
+                  id="footerImg"
+                  class="h-10 w-10 flex-shrink-0"
+                  src="../assets/cover.jpg"
+                  alt=""
+                />
               </div>
-              <div
-                id="footerAlbum"
-                class="text-xs text-gray-600 text-line-clamp-1"
-              >
-                Speaker
+              <div class="mr-4 space-y-2">
+                <div
+                  id="footerTitle"
+                  class="text-sm text-gray-400 text-line-clamp-1 font-semibold"
+                >
+                  Podcast
+                </div>
+                <div
+                  id="footerAlbum"
+                  class="text-xs text-gray-600 text-line-clamp-1"
+                >
+                  Speaker
+                </div>
               </div>
-            </div>
             </div>
             <div class="flex items-center justify-center">
               <button id="previous" class="w-5 h-5 text-white">

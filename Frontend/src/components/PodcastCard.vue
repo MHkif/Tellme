@@ -38,25 +38,7 @@
           This course discuss the main principales of the humaain nervous system
         </h3>
       </div>
-      <div class="flex items-center gap-2">
-        <!-- <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          class="fill-black"
-        >
-          <path
-            d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"
-          ></path>
-          <path d="m9 17 8-5-8-5z"></path>
-        </svg> -->
-
-        <h3 class="text-gray-800 text-xs sm:text-sm font-medium">2,867</h3>
-        <h3 class="text-gray-900 text-xs sm:text-sm">
-          views {{ this.$store.state.play }}
-        </h3>
-      </div>
+   
     </div>
   </div>
 </template>

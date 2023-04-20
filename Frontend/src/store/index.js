@@ -6,6 +6,7 @@ const store = createStore({
     id: localStorage.getItem("id") || "",
     user: JSON.parse(localStorage.getItem("user")) || {},
     play: localStorage.getItem("play") || false,
+    collapse: localStorage.getItem("collapse") || false,
     podcasts: JSON.parse(localStorage.getItem("podcasts")) || [],
   },
   mutations: {
@@ -15,13 +16,18 @@ const store = createStore({
     },
     setPlay(state) {
       localStorage.setItem("play", true);
+      localStorage.removeItem("collapse");
+      state.collapse = false;
       state.play = true;
     },
     setPodcasts(state, podcasts) {
       localStorage.setItem("podcasts", JSON.stringify(podcasts));
       state.podcasts = podcasts;
     },
-
+    collapsed(state) {
+      localStorage.setItem("collapse", true);
+      state.collapse = true;
+    },
     clearPodcasts(state) {
       localStorage.removeItem("podcasts");
       state.podcasts = [];
@@ -30,6 +36,10 @@ const store = createStore({
     clearPlay(state) {
       localStorage.removeItem("play");
       state.play = false;
+    },
+    clearCollapsed(state) {
+      localStorage.removeItem("collapse");
+      state.collapse = false;
     },
     setUser(state, user) {
       state.user = user;

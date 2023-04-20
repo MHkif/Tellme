@@ -11,11 +11,11 @@ import Pusher from "pusher-js";
 
 window.Echo = new Echo({
   broadcaster: "pusher",
-  key: "local",
+  key: "pusher_app_id",
   wsHost: "127.0.0.1",
   cluster: "mt1",
   wsPort: 6001,
-  forceTLS: true,
+  forceTLS: false,
   disableStats: true,
 });
 createApp(App).use(store).use(router).mount("#app");

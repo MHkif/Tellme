@@ -30,7 +30,11 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::post('search', [UserController::class, 'search']);
     Route::post('calling', [NotificationController::class, 'notifyUser']);
     Route::post('unreadNotification', [NotificationController::class, 'notifications']);
-    Route::post('/uploadFile', 'FileUploadController@storeUploads');
+
+    // Profile
+    Route::post('mypodcasts', [UserController::class, 'mypodcasts']);
+    Route::post('myPlayLists', [UserController::class, 'myPlayLists']);
+    
 
 
     Route::get('/streaming', [WebrtcStreamingController::class, 'index']);

@@ -115,7 +115,6 @@
       >
     </main>
     <!-- End Content -->
-
   </div>
 </template>
 
@@ -128,7 +127,6 @@ export default {
   props: ["user_notifications"],
   components: {
     SideBar,
-   
   },
 
   data() {
@@ -142,11 +140,14 @@ export default {
   methods: {},
   mounted() {
     // this.notifications.value = props.user_notifications;
-    // console.log(Echo);
     // Echo.private("calling." + store.state.id).notification((notification) => {
     //   // this.notifications.value.push(notification.notification);
     //   console.log(notification);
     // });
+    Echo.channel("test").listen("MyEvent", (event) => {
+      console.log("Received event:", event);
+    });
+    console.log("++++++++++++++++++++++++++");
   },
 };
 </script>

@@ -1,62 +1,38 @@
 <template>
+
+
   <div
-    class="snap-start min-w-full md:min-w-[40%] flex flex-col h-96 md:h-52 rounded-md bg-gray-800 border border-orange-200 md:flex-row overflow-hidden"
+    id="podcastItem"
+    class="snap-start  sm:w-1/2 md:w-1/3 lg:w-1/4 bg-blue-50 bg-opacity-80 border border-gray-50 flex flex-col rounded-md shadow-sm overflow-hidden"
   >
-    <!-- <div class="w-full h-full bg-gray-700 md:w-[40%]"></div> -->
-    <div class="w-full h-full bg-gray-700 lg:w-[40%]">
+    <div class="w-full h-full md:h-44 overflow-hidden p-1">
       <img
-        class="w-full h-full object-cover"
-        src="../assets/SophiaKianni_2021T-embed.png"
+        class="w-full h-full rounded hover:ring-1 ring-orange-200 bg-gray-700 object-fit"
+        :src="podcast.cover"
         alt=""
       />
     </div>
-    <div
-      class="w-full h-full flex flex-col justify-between bg-blue-50 p-4 md:w-[60%]"
-    >
-      <div class="flex justify-between items-center">
-        <h3 class="text-xs text-orange-500 font-medium sm:text-sm">
-          Episode {{ podcast.id }}
-        </h3>
-        <div class="p-0.5 bg-orange-600 rounded">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            class="w-4 h-4 sm:w-6 sm:h-6 fill-white"
-          >
-            <path
-              d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"
-            ></path>
-            <path d="m9 17 8-5-8-5z"></path>
-          </svg>
-        </div>
-      </div>
-      <div class="flex flex-col gap-2 sm:gap-4">
-        <h3 class="font-bold text-sm sm:text-md">
-            {{ podcast.title }}
-        </h3>
-        <h3 class="text-gray-500 text-xs sm:text-sm">
-          This course discuss the main principales of the humaain nervous system
-        </h3>
-      </div>
-      <div class="flex items-center gap-2">
-        <!-- <svg
+
+    <div class="w-full flex items-start justify-between px-3 py-4">
+      <h3 class="customTitle text-gray-800 font-bold text-sm sm:text-md">
+        {{ podcast.title }}
+      </h3>
+      <button class="text-white">
+        <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
+          fill="none"
           viewBox="0 0 24 24"
-          class="fill-black"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="ml-1 w-5 h-5 text-gray-800 fill-orange-50"
         >
           <path
-            d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"
-          ></path>
-          <path d="m9 17 8-5-8-5z"></path>
-        </svg> -->
-
-        <h3 class="text-gray-800 text-xs sm:text-sm font-medium">2,867</h3>
-        <h3 class="text-gray-900 text-xs sm:text-sm">views</h3>
-      </div>
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+          />
+        </svg>
+      </button>
     </div>
   </div>
 </template>

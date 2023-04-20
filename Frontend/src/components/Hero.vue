@@ -1,7 +1,7 @@
 <template>
     <!-- Hero Section -->
     <section
-        class="flex flex-col h-full justify-between items-center md:flex-row md:h-[80vh]"
+        class="  flex flex-col h-full justify-between items-center md:flex-row md:h-[80vh]"
     >
         <!-- Text Content -->
         <div

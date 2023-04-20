@@ -1,14 +1,14 @@
 // all music on table
-let music = document.querySelectorAll(".music");
-let podcast = document.querySelectorAll(".podcast");
+// let music = document.querySelectorAll(".music");
+// let podcast = document.querySelectorAll(".podcast");
 
 // music footer bar
 let footer = document.getElementById("footer");
 let footerImg = document.getElementById("footerImg");
 let footerTitle = document.getElementById("footerTitle");
-let footerAlbum = document.getElementById("footerAlbum");
+// let footerAlbum = document.getElementById("footerAlbum");
 // footer audio src
-let footerMusic = document.getElementById("footerMusic");
+let footerMusic = document.getElementById("audio");
 // footer play button
 let playBtn = document.getElementById("play");
 // footer pause btn
@@ -18,7 +18,7 @@ let nextBtn = document.getElementById("next");
 // footer previous btn
 let previousBtn = document.getElementById("previous");
 // footer volum
-let volumInp = document.getElementById("volumInp");
+var volumInp = document.getElementById("volumInp");
 // footer mute btn
 let muteBtn = document.getElementById("mute");
 // footer demute btn
@@ -34,55 +34,57 @@ let currentpodcast = "";
 let indexOfpodcast = 0;
 let currentDuration = 0;
 
-volumInp.value = 80;
-progressBar.value = 0;
+// volumInp.value = 80;
+// progressBar.value = 0;
 
-podcast.forEach((ele, i) => {
-  ele.addEventListener("dblclick", () => {
-    // add bg to the selected element
-    ele.classList.add("bg-gray-200/20");
-    // current song that clicked on
-    currentpodcast = ele.querySelector(".audio").src;
-    // current song index
-    indexOfSong = i;
-    // show footer bar
-      footer.classList.remove("hidden");
-    // replace footer with
-    footerImg.src = ele.querySelector(".cover").src;
-    footerTitle.textContent = ele.querySelector(".title").textContent;
-    //   footerAlbum.textContent = ele.querySelector(".album").textContent;
-    footerMusic.src = currentSong;
 
-    // play music on the footer bar
-    footerMusic.play();
+// footerMusic.addEventListener("dblclick", () => {
+//   // add bg to the selected element
+//   ele.classList.add("bg-gray-200/20");
+//   // current song that clicked on
+//   currentpodcast = ele.querySelector(".audio").src;
+//   // current song index
+//   indexOfSong = i;
+//   // show footer bar
+//     footer.classList.remove("hidden");
+//   // replace footer with
+//   footerImg.src = ele.querySelector(".cover").src;
+//   footerTitle.textContent = ele.querySelector(".title").textContent;
+//   //   footerAlbum.textContent = ele.querySelector(".album").textContent;
+//   footerMusic.src = currentSong;
 
-    // give the footer current volume
-    footerMusic.volume = volumInp.value / 100;
+//   // play music on the footer bar
+//   footerMusic.play();
 
-    playBtn.classList.add("hidden");
-    pauseBtn.classList.remove("hidden");
-  });
-});
+//   // give the footer current volume
+//   footerMusic.volume = volumInp.value / 100;
+
+//   playBtn.classList.add("hidden");
+//   pauseBtn.classList.remove("hidden");
+// });
+
+
 
 // get the duration of a song
-footerMusic.addEventListener("loadedmetadata", () => {
+footerMusic.addEventListener('loadedmetadata', () => {
   currentDuration = footerMusic.duration;
-  let second = `${parseInt(`${currentDuration % 60}`, 10)}`.padStart(2, "0");
+  let second = `${parseInt(`${currentDuration % 60}`, 10)}`.padStart(2,'0');
   let minute = parseInt(`${(currentDuration / 60) % 60}`, 10);
   endMusicDuration.textContent = `${minute}:${second}`;
   progressBar.max = currentDuration;
 });
 // get updated time by second and update the progress bar in the same time
-footerMusic.addEventListener("timeupdate", () => {
+footerMusic.addEventListener('timeupdate', () => {
   updateProgress(footerMusic.currentTime);
 });
+
 // update progressbar while music played
 function updateProgress(time) {
   progressBar.value = time;
   let second = `${parseInt(`${time % 60}`, 10)}`.padStart(2, "0");
   let minute = parseInt(`${(time / 60) % 60}`, 10);
   startMusicDuration.textContent = `${minute}:${second}`;
-}
+} 
 
 // play music
 playBtn.addEventListener("click", () => {
@@ -169,3 +171,10 @@ unmute.addEventListener("click", () => {
   volumInp.value = 100;
   footerMusic.volume = volumInp.value / 100;
 });
+
+
+
+
+
+// =============
+

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use BeyondCode\LaravelWebSockets\WebSockets\Channels\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -30,6 +31,7 @@ class MakeAgoraCall implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('agora-online-channel');
+        // return new PresenceChannel('agora-online-channel');
+        return new Channel('test');
     }
 }

@@ -2,42 +2,77 @@
   <footer
     :class="this.$store.state.play ? '' : 'hidden'"
     id="footer"
-    class="col-span-6 p-4 grid grid-cols-3 place-items-center gap-6 fixed z-10 w-[calc(100%-3.35rem)] bottom-0"
+    class="col-span-6 py-4 p-12 grid sm:grid-cols-2 md:grid-cols-3 md:place-items-end items-center gap-6 fixed z-10 w-[calc(100%-3.35rem)] bottom-0"
     style="background-color: #252525"
   >
-    <div class="flex items-center">
-      <div class="overflow-hidden rounded-xl mr-4">
-        <img
-          id="footerImg"
-          class="h-14 w-14 flex-shrink-0"
-          :src="podcast.cover"
-          alt=""
+    <div @click="close" class="absolute top-2 right-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="h-5 h-5 md:w-6 md:h-6 text-gray-500 hover:text-red-600"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
-      </div>
-      <div class="mr-4 space-y-2">
-        <div
-          id="footerTitle"
-          class="text-sm text-gray-400 text-line-clamp-1 font-semibold"
-        >
-          {{ podcast.title }}
-        </div>
-      </div>
-      <div class="flex items-center">
-        <button class="text-white p-2">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-            <path
-              d="M10 3.22l-.61-.6a5.5 5.5 0 0 0-7.78 7.77L10 18.78l8.39-8.4a5.5 5.5 0 0 0-7.78-7.77l-.61.61z"
-            />
-          </svg>
-        </button>
-      </div>
+      </svg>
     </div>
-    <div>
-      <div class="flex items-center justify-center mb-3">
+    <div
+      @click="collapsed"
+      class="absolute top-2 md:top-7 left-2 cursor-pointer"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        class="fill-white hover:fill-orange-500 h-5 h-5"
+      >
+        <path
+          d="M16.121 6.465 14 4.344V10h5.656l-2.121-2.121 3.172-3.172-1.414-1.414zM4.707 3.293 3.293 4.707l3.172 3.172L4.344 10H10V4.344L7.879 6.465zM19.656 14H14v5.656l2.121-2.121 3.172 3.172 1.414-1.414-3.172-3.172zM6.465 16.121l-3.172 3.172 1.414 1.414 3.172-3.172L10 19.656V14H4.344z"
+        ></path>
+      </svg>
+    </div>
+    <div class="hidden gap-3 items-center rounded md:flex">
+      <div class="overflow-hidden rounded">
+        <img id="footerImg" class="h-12 w-14" :src="podcast.cover" alt="" />
+      </div>
+
+      <div
+        id="footerTitle"
+        class="text-sm text-gray-400 text-line-clamp-1 font-semibold"
+      >
+        {{ podcast.title }}
+      </div>
+
+      <button class="text-white p-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-5 h-5 fill-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <div class="flex items-center justify-center">
         <audio
           ref="audioPlayer"
           controls
-          id="audio"
+          id="podcastAudio"
           preload="metadata"
           :src="podcast.url"
           hidden
@@ -71,19 +106,18 @@
           </svg>
         </button>
 
+        <!-- @click="pause" -->
         <button
-          v-if="isPlaying"
           id="pause"
-          @click="pause"
           :disabled="!podcasts.length && !podcast"
-          class="rounded-full flex text-white disabled:text-gray-600 mr-6"
+          class="hidden rounded-full flex text-white disabled:text-gray-600 mr-6"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            class="fill-current w-8 h-8 m-auto"
+            class="fill-current w-6 h-6 md:w-8 md:h-8 m-auto"
           >
             <path
               d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"
@@ -91,15 +125,15 @@
             <path d="M13 9h2v6h-2zM9 9h2v6H9z"></path>
           </svg>
         </button>
+        <!-- @click="play(this.podcast)" -->
+        <!-- v-else -->
         <button
-          v-else
           id="play"
-          @click="play(this.podcast)"
           :disabled="!podcasts.length && !podcast"
           class="rounded-full flex text-white disabled:text-gray-600 mr-6"
         >
           <svg
-            class="fill-current h-8 w-8 m-auto"
+            class="fill-current w-6 h-6 md:w-8 md:h-8 m-auto"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +178,9 @@
       </div>
 
       <div class="flex items-center">
-        <span class="text-xs text-white font-light">{{ duration }}</span>
+        <span id="currentStart" class="text-xs text-white font-light">{{
+          duration
+        }}</span>
         <input
           type="range"
           min="0"
@@ -154,54 +190,45 @@
           id="progressBar"
           class="w-full h-0.5 bg-gray-400 rounded-lg appearance-none cursor-pointer"
         />
-        <span class="text-xs text-black font-light"> {{ endDuration }}</span>
+        <span id="currentEnd" class="text-xs text-black font-light">
+          {{ endDuration }}</span
+        >
+      </div>
+      <div
+        id="footerTitle"
+        class="text-xs text-gray-400 text-line-clamp-1 font-semibold text-center overflox-hidden md:hidden"
+      >
+        {{ podcast.title }} 
       </div>
     </div>
-    <div class="flex flex-1 items-center justify-end space-x-1">
-      <i class="fa-solid fa-volume-xmark cursor-pointer" id="mute"></i>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        value="2.5"
-        step="0.5"
-        id="volumInp"
-        class="h-1 bg-gray-400 rounded-lg appearance-none cursor-pointer"
-      />
-      <i class="fa-solid fa-volume-high cursor-pointer" id="unmute"></i>
-
-      <svg
-        @click="close"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        class="fill-white cursor-pointer"
-      >
-        <path
-          d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V7h16l.001 12H4z"
-        ></path>
-        <path
-          d="m15.707 10.707-1.414-1.414L12 11.586 9.707 9.293l-1.414 1.414L10.586 13l-2.293 2.293 1.414 1.414L12 14.414l2.293 2.293 1.414-1.414L13.414 13z"
-        ></path>
-      </svg>
+    <div class="hidden items-center justify-center space-x-1 md:flex">
+      <div class="flex items-center justify-center">
+        <i class="fa-solid fa-volume-xmark cursor-pointer" id="mute"></i>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="2.5"
+          step="0.5"
+          id="volumInp"
+          class="h-1 bg-gray-400 rounded-lg appearance-none cursor-pointer"
+        />
+        <i class="fa-solid fa-volume-high cursor-pointer" id="unmute"></i>
+      </div>
     </div>
   </footer>
 </template>
 
 <script>
-import { ref } from "vue";
-
 export default {
   name: "AudioPlayer",
   props: ["podcast"],
-  
   data() {
     return {
       current: {},
       currentTime: "",
-      duration: 0,
-      endDuration: 0,
+      duration: "",
+      endDuration: "",
       index: 0,
       podcasts: [],
       player: new Audio(),
@@ -212,22 +239,24 @@ export default {
     close() {
       this.$store.commit("clearPlay");
     },
+    uncollapsed() {
+      this.$store.commit("clearCollapsed");
+    },
+    collapsed() {
+      this.$store.commit("collapsed");
+      this.close();
+    },
     play(podcast) {
       if (typeof podcast.url != "undefined" || podcast.url != null) {
         const progressBar = this.$refs.progressBar;
         let volumInp = document.getElementById("volumInp");
-        let audio = document.getElementById("audio");
-
         this.current = podcast;
-        // this.player.src = this.current.url;
-        audio.src = this.current.url;
-        audio.play();
-        // this.player.play();
-        // this.player.volume = volumInp.value / 100;
-        audio.volume = volumInp.value / 100;
-
+        this.player.src = this.current.url;
+        // audio.play();
+        this.player.play();
+        this.player.volume = volumInp.value / 100;
         this.isPlaying = true;
-        this.duration = audio.duration;
+        this.duration = this.player.duration;
 
         let second = `${parseInt(`${this.duration % 60}`, 10)}`.padStart(
           2,
@@ -238,7 +267,7 @@ export default {
         progressBar.max = this.duration;
         // get updated time by second and update the progress bar in the same time
 
-        audio.ontimeupdate(updateProgress(this.player.currentTime));
+        this.player.ontimeupdate(updateProgress(this.player.currentTime));
         // update progressbar while music played
         function updateProgress(time) {
           progressBar.value = time;
@@ -285,15 +314,15 @@ export default {
       progressBar.value = progress;
     },
   },
-  // mounted() {
-  //   this.podcast = this.$store.state.podcasts;
-  // },
+  mounted() {
+    // this.podcast = this.$store.state.podcasts;
+    // this.uncollapsed();
+  },
   created() {
-    this.current = this.podcast;
-    this.player.src = this.current.url;
-    this.currentTime = this.current.currentTime;
-    this.duration = this.current.duration;
-
+    // this.current = this.podcast;
+    // this.player.src = this.current.url;
+    // this.currentTime = this.current.currentTime;
+    // this.duration = this.current.duration;
     // this.player.play();
   },
 };
